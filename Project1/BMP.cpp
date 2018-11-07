@@ -8,7 +8,7 @@ char *LoadBMP(char *filename, MybmpInfoHeader *bInfoHeader)
 	char *imgdata;
 	uint16_t type;
 
-	f = fopen(filename, "r");
+	fopen_s(&f, filename, "r");
 	if (!f) {
 		return NULL;
 	}

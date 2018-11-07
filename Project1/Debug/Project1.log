@@ -1,2 +1,41 @@
-﻿  Source.cpp
-  Project1.vcxproj -> C:\Users\Jalil Raziel\source\repos\Project1\Debug\Project1.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: El directorio intermedio (Debug\) contiene archivos compartidos de otro proyecto (Project1.vcxproj). Esto puede dar lugar a un comportamiento incorrecto de limpieza y recompilación.
+  Source.cpp
+d:\include\xnamath.h(2662): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2663): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2664): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2665): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2666): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2667): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2668): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2689): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2690): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2691): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2694): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2695): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2698): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2702): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2712): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2713): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2715): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2716): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2717): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2727): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2728): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2729): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2730): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2731): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2732): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2742): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2743): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamath.h(2754): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamathconvert.inl(2254): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamathconvert.inl(4523): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamathconvert.inl(4577): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamathconvert.inl(4639): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamathconvert.inl(4707): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamathconvert.inl(4770): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamathconvert.inl(4832): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamathvector.inl(1269): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamathmisc.inl(518): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+d:\include\xnamathmisc.inl(519): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
+  Project1.vcxproj -> C:\Users\Jalil Raziel\source\repos\jalil_graficas_2\Debug\Render_T.exe

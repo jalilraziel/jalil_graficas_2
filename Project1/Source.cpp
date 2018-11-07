@@ -7,6 +7,7 @@
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dx11.lib")
 #pragma comment (lib, "d3dx10.lib")
+#include <xnamath.h>
      
 #define SCREEN_WIDTH  800
 #define SCREEN_HEIGHT 600   
@@ -19,6 +20,12 @@ ID3D11VertexShader *pvertex_S;         // puntero a la direccion del vertexshade
 ID3D11PixelShader *ppixel_S;           // puntero a la direccion del pixelshader
 ID3D11Buffer *pVertex_B;               // puntero a la direccion del vertexbuffer
 ID3D11InputLayout *pLayout;            // puntero al diseño de entrada
+ID3D11Buffer* pIndex_B;
+ID3D11Buffer* Constant_B;
+XMMATRIX g_World;
+XMMATRIX g_View;
+XMMATRIX g_Projection;
+D3D_DRIVER_TYPE g_driverType = D3D_DRIVER_TYPE_NULL;
 
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -31,6 +38,13 @@ void Creando_Pipeline(void);
 struct Vertices{
 	FLOAT X, Y, Z;
 	D3DXCOLOR Color;
+};
+
+struct ConstantBuffer
+{
+	XMMATRIX mWorld;
+	XMMATRIX mView;
+	XMMATRIX mProjection;
 };
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -123,7 +137,34 @@ void Inicio_DXD3(HWND hWnd)
 
 void RenderFrame(void)
 {
+	static float t = 0.0f;
+	if (g_driverType == D3D_DRIVER_TYPE_REFERENCE)
+	{
+		t += (float)XM_PI * 0.0125f;
+	}
+	else
+	{
+		static DWORD dwTimeStart = 0;
+		DWORD dwTimeCur = GetTickCount();
+		if (dwTimeStart == 0)
+			dwTimeStart = dwTimeCur;
+		t = (dwTimeCur - dwTimeStart) / 1000.0f;
+	}
+
+	g_World = XMMatrixRotationY(t);
+
+	XMVECTOR Eye = XMVectorSet(0.0f, 1.0f, -5.0f, 0.0f);
+	XMVECTOR At = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	g_View = XMMatrixLookAtLH(Eye, At, Up);
+
 	devcon->ClearRenderTargetView(pbackbuffer, D3DXCOLOR(0.0f, 0.2f, 0.4f, 1.0f));
+
+	ConstantBuffer cb;
+	cb.mWorld = XMMatrixTranspose(g_World);
+	cb.mView = XMMatrixTranspose(g_View);
+	cb.mProjection = XMMatrixTranspose(g_Projection);
+	devcon->UpdateSubresource(Constant_B, 0, NULL, &cb, 0, 0);
 	
 	UINT size = sizeof(Vertices);
 	UINT offset = 0;
@@ -141,6 +182,7 @@ void Limpiar_DXD3(void)
 	pvertex_S->Release();
 	ppixel_S->Release();
 	pVertex_B->Release();
+	pIndex_B->Release();
 	p_cadena->Release();
 	pbackbuffer->Release();
 	dev->Release();
@@ -150,27 +192,62 @@ void Limpiar_DXD3(void)
 void Creando_Graphics(void)
 {
 	Vertices traingulo[] =
-	{		
-		{ 0.0f, 0.5f, 0.0f, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f) },
-		{ 0.45f, -0.5, 0.0f,  D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f) },
-		{ -0.45f, -0.5f, 0.0f, D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f) }
+	{
+		//{ 0.5f, 0.5f, 0.0f, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f) },
+		//{ 0.5f, -0.5, 0.0f,  D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f) },
+		//{ -0.5f, -0.5f, 0.0f, D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f) },
+		{-1.0f, 1.0f, -1.0f, D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f)},
+		{1.0f, 1.0f, -1.0f, D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f)},
+		{1.0f, 1.0f, 1.0f, D3DXCOLOR(0.0f, 1.0f, 1.0f, 1.0f)},
+		{-1.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f)},
+		{-1.0f, -1.0f, -1.0f, D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f)},
+		{1.0f, -1.0f, -1.0f, D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f)},
+		{1.0f, -1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)},
+		{-1.0f, -1.0f, 1.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f)},
 	};
+	WORD indices[] =
+	{
+		3,1,0,
+		2,1,3,
+
+		0,5,4,
+		1,5,0,
+
+		3,4,7,
+		0,4,3,
+
+		1,6,5,
+		2,6,1,
+
+		2,7,6,
+		3,7,2,
+
+		6,4,5,
+		7,4,6,
+	};
+
 
 	D3D11_BUFFER_DESC buffer_d;
 	ZeroMemory(&buffer_d, sizeof(buffer_d));
 
-	buffer_d.Usage = D3D11_USAGE_DYNAMIC;
-	buffer_d.ByteWidth = sizeof(Vertices) * 3;
-	buffer_d.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	buffer_d.Usage = D3D11_USAGE_DEFAULT;
+	buffer_d.ByteWidth = sizeof(Vertices) * 36;
+	buffer_d.BindFlags = D3D11_USAGE_DEFAULT;
 	buffer_d.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	buffer_d.MiscFlags = 0;
+	D3D11_SUBRESOURCE_DATA InitData;
+	ZeroMemory(&InitData, sizeof(InitData));
+	InitData.pSysMem = indices;
+	dev->CreateBuffer(&buffer_d, &InitData, &pIndex_B);
+	devcon->IASetIndexBuffer(pIndex_B, DXGI_FORMAT_R16_UINT, 0);
 
-	dev->CreateBuffer(&buffer_d, NULL, &pVertex_B);
 
-	D3D11_MAPPED_SUBRESOURCE map_S;
-	devcon->Map(pVertex_B, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &map_S);
-	memcpy(map_S.pData, traingulo, sizeof(traingulo));
-	devcon->Unmap(pVertex_B, NULL);
+	//D3D11_MAPPED_SUBRESOURCE map_S;
+	//devcon->Map(pVertex_B, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &map_S);
+	//memcpy(map_S.pData, traingulo, sizeof(traingulo));
+	//devcon->Unmap(pVertex_B, NULL);
 }
+
 
 void Creando_Pipeline(void)
 {
@@ -181,8 +258,10 @@ void Creando_Pipeline(void)
 	dev->CreateVertexShader(VS->GetBufferPointer(), VS->GetBufferSize(), NULL, &pvertex_S);
 	dev->CreatePixelShader(PS->GetBufferPointer(), PS->GetBufferSize(), NULL, &ppixel_S);
 
+	devcon->IASetIndexBuffer(pIndex_B, DXGI_FORMAT_R16_UINT, 0);
 	devcon->VSSetShader(pvertex_S, 0, 0);
 	devcon->PSSetShader(ppixel_S, 0, 0);
+
 
 	D3D11_INPUT_ELEMENT_DESC input_E_D[] =
 	{
