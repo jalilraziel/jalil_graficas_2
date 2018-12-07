@@ -38,5 +38,5 @@ d:\include\xnamathconvert.inl(4832): warning C4838: la conversión de 'unsigned 
 d:\include\xnamathvector.inl(1269): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
 d:\include\xnamathmisc.inl(518): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
 d:\include\xnamathmisc.inl(519): warning C4838: la conversión de 'unsigned int' en 'INT' requiere una conversión de restricción
-c:\users\jalil raziel\desktop\proyectos\nueva carpeta\jalil_graficas_2\project1\source.cpp(285): warning C4715: 'InitDev': no todas las rutas de acceso de control devuelven un valor
+c:\users\jalil raziel\desktop\proyectos\nueva carpeta\jalil_graficas_2\project1\source.cpp(314): warning C4715: 'InitDev': no todas las rutas de acceso de control devuelven un valor
   Project1.vcxproj -> C:\Users\Jalil Raziel\Desktop\proyectos\Nueva carpeta\jalil_graficas_2\Debug\Render_T.exe
